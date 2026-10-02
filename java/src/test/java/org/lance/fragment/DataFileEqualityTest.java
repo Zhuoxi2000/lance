@@ -37,31 +37,24 @@ public class DataFileEqualityTest {
   }
 
   @Test
-  void testDataFileEqualObjectsHaveEqualHashCodes() {
-    DataFile a = dataFile(null);
-    DataFile b = dataFile(null);
-    assertEquals(a, b);
-    assertEquals(a.hashCode(), b.hashCode());
-  }
-
-  @Test
-  void testDataFileEqualsConsidersBaseId() {
+  void testDataFileEqualsAndHashCodeIncludeBaseId() {
+    for (Integer baseId : new Integer[] {null, 1}) {
+      assertEquals(dataFile(baseId), dataFile(baseId));
+      assertEquals(dataFile(baseId).hashCode(), dataFile(baseId).hashCode());
+    }
     // Same relative path under different bases refers to different physical files.
     assertNotEquals(dataFile(1), dataFile(2));
     assertNotEquals(dataFile(null), dataFile(1));
   }
 
   @Test
-  void testDeletionFileEqualObjectsHaveEqualHashCodes() {
-    DeletionFile a = deletionFile(null);
-    DeletionFile b = deletionFile(null);
-    assertEquals(a, b);
-    assertEquals(a.hashCode(), b.hashCode());
-  }
-
-  @Test
-  void testDeletionFileEqualsConsidersBaseId() {
+  void testDeletionFileEqualsAndHashCodeIncludeBaseId() {
+    for (Integer baseId : new Integer[] {null, 1}) {
+      assertEquals(deletionFile(baseId), deletionFile(baseId));
+      assertEquals(deletionFile(baseId).hashCode(), deletionFile(baseId).hashCode());
+    }
     assertNotEquals(deletionFile(1), deletionFile(2));
+    assertNotEquals(deletionFile(null), deletionFile(1));
   }
 
   @Test
